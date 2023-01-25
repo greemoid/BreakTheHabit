@@ -1,48 +1,56 @@
 package com.greemoid.breakthehabit
 
-import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.greemoid.breakthehabit.databinding.ActivityMainBinding
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private val viewModel: BaseViewModel by viewModels()
+    private val activity = this
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val sharedFrefs = getSharedPreferences("main", Context.MODE_PRIVATE)
-        val time = sharedFrefs.getLong("time", 0)
         binding.btnStart.setOnClickListener {
-            sharedFrefs.edit().putLong("time", System.currentTimeMillis()).apply()
+            viewModel.saveTime(System.currentTimeMillis())
             setVisibility(STARTED)
         }
         binding.btnStop.setOnClickListener {
             invalidateTime()
-            sharedFrefs.edit().putLong("time", 0L).apply()
+            viewModel.saveTime(0L)
             setVisibility(STOPPED)
         }
 
-        if (time == 0L) {
-            setVisibility(STOPPED)
-            invalidateTime()
-        } else {
-            setVisibility(STARTED)
-            convertMilliseconds(System.currentTimeMillis() - time)
+
+        viewModel.milliseconds.observe(this) { time ->
+            Log.d("timetimetime", time.toString())
+            if (time == 0L) {
+                setVisibility(STOPPED)
+                invalidateTime()
+            } else {
+                setVisibility(STARTED)
+                lifecycleScope.launchWhenResumed {
+                    delay(1000)
+                    viewModel.convert().observe(activity) {
+                        Log.d("timetimetime", it)
+                        binding.tvCounter.text = it
+                    }
+                }
+            }
         }
+
     }
 
-    private fun convertMilliseconds(milliseconds: Long) {
-        val seconds = milliseconds / 1000
-        val minutes = seconds / 60 % 60
-        val hours = seconds / 3600 % 24
-        val days = seconds / 86400
-
-        binding.tvCounter.text = resources.getString(R.string.time, days, hours, minutes)
-    }
 
     private fun setVisibility(state: Int) {
         if (state == STARTED) {
