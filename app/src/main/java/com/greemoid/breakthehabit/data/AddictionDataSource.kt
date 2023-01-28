@@ -7,7 +7,7 @@ class AddictionDataSource(
         return dao.getList()
     }
 
-    override fun save(addictionModel: AddictionModel) {
+    override fun saveToList(addictionModel: AddictionModel) {
         dao.save(addictionModel)
     }
 

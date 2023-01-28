@@ -7,6 +7,6 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "addiction_table")
 data class AddictionModel(
     @PrimaryKey(autoGenerate = true) val id: Int,
-    @ColumnInfo val time: String,
+    @ColumnInfo val days: String,
     @ColumnInfo val date: String,
 )
