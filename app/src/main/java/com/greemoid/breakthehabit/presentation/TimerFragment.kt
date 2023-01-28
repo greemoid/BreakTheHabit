@@ -1,26 +1,34 @@
-package com.greemoid.breakthehabit
+package com.greemoid.breakthehabit.presentation
 
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
-import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.greemoid.breakthehabit.databinding.ActivityMainBinding
+import com.greemoid.breakthehabit.R
+import com.greemoid.breakthehabit.databinding.FragmentTimerBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class TimerFragment : Fragment() {
 
-    private lateinit var binding: ActivityMainBinding
+    private lateinit var binding: FragmentTimerBinding
     private val viewModel: BaseViewModel by viewModels()
-    private val activity = this
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View? {
+        binding = FragmentTimerBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         binding.btnStart.setOnClickListener {
             viewModel.saveTime(System.currentTimeMillis())
             setVisibility(STARTED)
@@ -32,7 +40,7 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-        viewModel.milliseconds.observe(this) { time ->
+        viewModel.milliseconds.observe(viewLifecycleOwner) { time ->
             Log.d("timetimetime", time.toString())
             if (time == 0L) {
                 setVisibility(STOPPED)
@@ -40,8 +48,8 @@ class MainActivity : AppCompatActivity() {
             } else {
                 setVisibility(STARTED)
                 lifecycleScope.launchWhenResumed {
-                    delay(1000)
-                    viewModel.convert().observe(activity) {
+                    delay(100)
+                    viewModel.convert().observe(viewLifecycleOwner) {
                         Log.d("timetimetime", it)
                         binding.tvCounter.text = it
                     }
@@ -50,7 +58,6 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
-
 
     private fun setVisibility(state: Int) {
         if (state == STARTED) {

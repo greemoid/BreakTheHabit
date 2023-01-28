@@ -1,6 +1,7 @@
-package com.greemoid.breakthehabit
+package com.greemoid.breakthehabit.di
 
 import android.content.Context
+import com.greemoid.breakthehabit.data.TimeSharedPrefs
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

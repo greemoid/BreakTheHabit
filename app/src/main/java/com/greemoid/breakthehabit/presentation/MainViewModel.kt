@@ -1,4 +1,4 @@
-package com.greemoid.breakthehabit
+package com.greemoid.breakthehabit.presentation
 
 import androidx.lifecycle.LiveData
 

@@ -1,7 +1,6 @@
-package com.greemoid.breakthehabit
+package com.greemoid.breakthehabit.data
 
 import android.content.Context
-import android.util.Log
 
 interface TimeSharedPrefs {
     fun saveTime(milliseconds: Long)
