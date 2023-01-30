@@ -9,9 +9,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.greemoid.breakthehabit.R
+import com.greemoid.breakthehabit.data.AddictionModel
 import com.greemoid.breakthehabit.databinding.FragmentTimerBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
+import kotlin.random.Random
 
 @AndroidEntryPoint
 class TimerFragment : Fragment() {
@@ -34,12 +36,18 @@ class TimerFragment : Fragment() {
             setVisibility(STARTED)
         }
         binding.btnStop.setOnClickListener {
-            invalidateTime()
             viewModel.saveTime(0L)
+            invalidateTime()
+            val model = AddictionModel(
+                days = "10",
+                date = "10101"
+            )
+            viewModel.saveToList(model)
             setVisibility(STOPPED)
         }
 
 
+//        viewModel.getTime()
         viewModel.milliseconds.observe(viewLifecycleOwner) { time ->
             Log.d("timetimetime", time.toString())
             if (time == 0L) {
