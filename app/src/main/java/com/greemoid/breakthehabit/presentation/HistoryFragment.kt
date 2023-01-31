@@ -1,6 +1,7 @@
 package com.greemoid.breakthehabit.presentation
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,7 +31,9 @@ class HistoryFragment : Fragment() {
         rv.adapter = adapter
         viewModel.getList().observe(viewLifecycleOwner) { list ->
             adapter.differ.submitList(list.asReversed())
+            Log.d("histhist", "fetch")
         }
+
     }
 
 }

@@ -1,16 +1,17 @@
 package com.greemoid.breakthehabit.data
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.lifecycle.LiveData
+import androidx.room.*
 
 @Dao
 interface AddictionDao {
 
     @Query("SELECT * FROM addiction_table")
-    fun getList(): List<AddictionModel>
+    fun getList(): LiveData<List<AddictionModel>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun save(addictionModel: AddictionModel)
+    suspend fun save(addictionModel: AddictionModel)
+
+    @Delete
+    fun delete(addictionModel: AddictionModel)
 }

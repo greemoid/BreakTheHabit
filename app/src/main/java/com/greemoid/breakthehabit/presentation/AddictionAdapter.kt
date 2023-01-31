@@ -4,11 +4,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.greemoid.breakthehabit.data.AddictionModel
 import com.greemoid.breakthehabit.databinding.SessionItemLayoutBinding
 
-class AddictionAdapter() : RecyclerView.Adapter<AddictionAdapter.AddictionViewHolder>() {
+class AddictionAdapter() :
+    RecyclerView.Adapter<AddictionAdapter.AddictionViewHolder>() {
 
     inner class AddictionViewHolder(private val binding: SessionItemLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -27,7 +29,7 @@ class AddictionAdapter() : RecyclerView.Adapter<AddictionAdapter.AddictionViewHo
 
     override fun getItemCount(): Int = differ.currentList.size
 
-        private val differCallback = object : DiffUtil.ItemCallback<AddictionModel>() {
+    private val differCallback = object : DiffUtil.ItemCallback<AddictionModel>() {
         override fun areItemsTheSame(oldItem: AddictionModel, newItem: AddictionModel): Boolean {
             return oldItem.id == newItem.id
         }
@@ -38,4 +40,5 @@ class AddictionAdapter() : RecyclerView.Adapter<AddictionAdapter.AddictionViewHo
     }
 
     val differ = AsyncListDiffer(this, differCallback)
+
 }
