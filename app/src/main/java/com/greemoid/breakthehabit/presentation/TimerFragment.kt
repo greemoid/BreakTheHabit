@@ -18,14 +18,16 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class TimerFragment : Fragment() {
 
-    private lateinit var binding: FragmentTimerBinding
+    private var _binding: FragmentTimerBinding? = null
+    val binding get() = _binding!!
+
     private val viewModel: BaseViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        binding = FragmentTimerBinding.inflate(inflater, container, false)
+        _binding = FragmentTimerBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -81,6 +83,11 @@ class TimerFragment : Fragment() {
 
     private fun invalidateTime() {
         binding.tvCounter.text = resources.getString(R.string.time, 0, 0, 0)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     companion object {
