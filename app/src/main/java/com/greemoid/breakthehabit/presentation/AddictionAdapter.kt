@@ -14,7 +14,12 @@ class AddictionAdapter() :
 
     inner class AddictionViewHolder(private val binding: SessionItemLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
-
+            fun bind(addictionModel: AddictionModel) {
+                binding.apply {
+                    tvBadgeAndDays.text = addictionModel.days
+                    tvDescription.text = addictionModel.date
+                }
+            }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AddictionViewHolder {
@@ -24,7 +29,8 @@ class AddictionAdapter() :
     }
 
     override fun onBindViewHolder(holder: AddictionViewHolder, position: Int) {
-
+        val model = differ.currentList[position]
+        holder.bind(model)
     }
 
     override fun getItemCount(): Int = differ.currentList.size

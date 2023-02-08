@@ -14,6 +14,9 @@ import com.greemoid.breakthehabit.databinding.FragmentTimerBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.*
 
 @AndroidEntryPoint
 class TimerFragment : Fragment() {
@@ -39,12 +42,16 @@ class TimerFragment : Fragment() {
             viewModel.getTime()
             setVisibility(STARTED)
         }
+        var timeString = ""
+        val formatter = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        val date = Date()
+        val current = formatter.format(date)
         binding.btnStop.setOnClickListener {
             viewModel.saveTime(0L)
             invalidateTime()
             val model = AddictionModel(
-                days = "10",
-                date = "10101",
+                days = timeString,
+                date = current,
                 image = "sfsdfsd"
             )
             viewModel.viewModelScope.launch {
@@ -61,6 +68,7 @@ class TimerFragment : Fragment() {
                 lifecycleScope.launchWhenResumed {
                     delay(500)
                     viewModel.convert().observe(viewLifecycleOwner) { string ->
+                        timeString = string
                         binding.tvCounter.text = string
                     }
                 }
