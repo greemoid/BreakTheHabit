@@ -1,7 +1,6 @@
 package com.greemoid.breakthehabit.presentation
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,14 +13,14 @@ import dagger.hilt.android.AndroidEntryPoint
 class HistoryFragment : Fragment() {
 
     private var _binding: FragmentHistoryBinding? = null
-    val binding get() = _binding!!
+    private val binding get() = _binding!!
 
     private val viewModel: BaseViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
+    ): View {
         _binding = FragmentHistoryBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -33,9 +32,7 @@ class HistoryFragment : Fragment() {
         rv.adapter = adapter
         viewModel.getList().observe(viewLifecycleOwner) { list ->
             adapter.differ.submitList(list.asReversed())
-            Log.d("histhist", "fetch")
         }
-
     }
 
     override fun onDestroyView() {

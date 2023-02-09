@@ -4,22 +4,21 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.greemoid.breakthehabit.data.AddictionModel
 import com.greemoid.breakthehabit.databinding.SessionItemLayoutBinding
 
-class AddictionAdapter() :
+class AddictionAdapter :
     RecyclerView.Adapter<AddictionAdapter.AddictionViewHolder>() {
 
     inner class AddictionViewHolder(private val binding: SessionItemLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
-            fun bind(addictionModel: AddictionModel) {
-                binding.apply {
-                    tvBadgeAndDays.text = addictionModel.days
-                    tvDescription.text = addictionModel.date
-                }
+        fun bind(addictionModel: AddictionModel) {
+            binding.apply {
+                tvBadgeAndDays.text = addictionModel.days
+                tvDescription.text = addictionModel.date
             }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AddictionViewHolder {

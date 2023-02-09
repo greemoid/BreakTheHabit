@@ -22,14 +22,14 @@ import java.util.*
 class TimerFragment : Fragment() {
 
     private var _binding: FragmentTimerBinding? = null
-    val binding get() = _binding!!
+    private val binding get() = _binding!!
 
     private val viewModel: BaseViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
+    ): View {
         _binding = FragmentTimerBinding.inflate(inflater, container, false)
         return binding.root
     }
