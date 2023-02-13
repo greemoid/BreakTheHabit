@@ -1,9 +1,11 @@
 package com.greemoid.breakthehabit.presentation
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -14,7 +16,6 @@ import com.greemoid.breakthehabit.databinding.FragmentTimerBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -37,10 +38,25 @@ class TimerFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         invalidateTime()
+        val builder = AlertDialog.Builder(requireContext())
         binding.btnStart.setOnClickListener {
-            viewModel.saveTime(System.currentTimeMillis())
+            val dialog = builder.create()
+            dialog.show()
+            /*viewModel.saveTime(System.currentTimeMillis())
             viewModel.getTime()
-            setVisibility(STARTED)
+            setVisibility(STARTED)*/
+        }
+        builder.apply {
+            setTitle("Date")
+            setMessage("Now or earlier?")
+            setPositiveButton("Now") { dialog, which ->
+                viewModel.saveTime(System.currentTimeMillis())
+                viewModel.getTime()
+                setVisibility(STARTED)
+            }
+            setNegativeButton("Earlier") { dialog, which ->
+                Toast.makeText(requireContext(), "Earlier", Toast.LENGTH_SHORT).show()
+            }
         }
         var timeString = ""
         val formatter = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
