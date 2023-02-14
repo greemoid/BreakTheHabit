@@ -1,10 +1,13 @@
 package com.greemoid.breakthehabit.presentation
 
 import android.app.AlertDialog
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -27,6 +30,8 @@ class TimerFragment : Fragment() {
 
     private val viewModel: BaseViewModel by viewModels()
 
+    private lateinit var dialog: AlertDialog
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -39,25 +44,80 @@ class TimerFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         invalidateTime()
         val builder = AlertDialog.Builder(requireContext())
+
+        val inflater = layoutInflater
+        val dialogView = inflater.inflate(R.layout.dialog_layout, null)
+
+        builder.setView(dialogView)
         binding.btnStart.setOnClickListener {
-            val dialog = builder.create()
+            dialog = builder.create()
             dialog.show()
             /*viewModel.saveTime(System.currentTimeMillis())
             viewModel.getTime()
             setVisibility(STARTED)*/
         }
+
         builder.apply {
-            setTitle("Date")
-            setMessage("Now or earlier?")
-            setPositiveButton("Now") { dialog, which ->
+
+            val leftButton = dialogView.findViewById<Button>(R.id.button_now)
+            leftButton.setOnClickListener {
+                viewModel.saveTime(System.currentTimeMillis())
+                viewModel.getTime()
+                setVisibility(STARTED)
+                dialog.dismiss()
+            }
+
+            val rightButton = dialogView.findViewById<Button>(R.id.button_earlier)
+            rightButton.setOnClickListener {
+                // Perform some action when the right button is clicked
+                Toast.makeText(requireContext(), "Earlier", Toast.LENGTH_SHORT).show()
+
+                    val calendar = Calendar.getInstance()
+                    val year = calendar.get(Calendar.YEAR)
+                    val month = calendar.get(Calendar.MONTH)
+                    val day = calendar.get(Calendar.DAY_OF_MONTH)
+                    val hour = calendar.get(Calendar.HOUR_OF_DAY)
+                    val minute = calendar.get(Calendar.MINUTE)
+
+                    val datePickerDialog = DatePickerDialog(
+                        requireContext(),
+                        DatePickerDialog.OnDateSetListener { view, selectedYear, selectedMonth, selectedDay ->
+                            val timePickerDialog = TimePickerDialog(
+                                requireContext(),
+                                TimePickerDialog.OnTimeSetListener { view, selectedHour, selectedMinute ->
+                                    val selectedCalendar = Calendar.getInstance()
+                                    selectedCalendar.set(selectedYear, selectedMonth, selectedDay, selectedHour, selectedMinute)
+                                    val selectedDateTimeInMillis = selectedCalendar.timeInMillis
+                                    viewModel.saveTime(selectedDateTimeInMillis)
+                                    viewModel.getTime()
+                                    setVisibility(STARTED)
+                                },
+                                hour,
+                                minute,
+                                false
+                            )
+                            timePickerDialog.show()
+                        },
+                        year,
+                        month,
+                        day
+                    )
+                    datePickerDialog.show()
+
+
+                dialog.dismiss()
+            }
+
+            /*setPositiveButton("Now") { dialog, which ->
                 viewModel.saveTime(System.currentTimeMillis())
                 viewModel.getTime()
                 setVisibility(STARTED)
             }
             setNegativeButton("Earlier") { dialog, which ->
                 Toast.makeText(requireContext(), "Earlier", Toast.LENGTH_SHORT).show()
-            }
+            }*/
         }
+
         var timeString = ""
         val formatter = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         val date = Date()
