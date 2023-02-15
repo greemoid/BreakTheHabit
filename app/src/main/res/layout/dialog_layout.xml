@@ -1,64 +1,20 @@
-<?xml version="1.0" encoding="utf-8"?><!--
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="16dp">
-
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:text="Title" />
-
-    <TextView
-        android:id="@+id/question"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:text="Question" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="end"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/button_left"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Left Button" />
-
-        <Button
-            android:id="@+id/button_right"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Right Button" />
-    </LinearLayout>
-
-</LinearLayout>-->
-
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardBackgroundColor="@color/white"
-    app:cardCornerRadius="16dp">
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp">
+    android:paddingTop="32dp"
+    android:paddingBottom="32dp"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
+    android:background="#121314">
 
         <TextView
             android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Оберіть дату"
+            android:textColor="#ffffff"
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -70,41 +26,37 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
+            android:textColor="#ffffff"
             android:text="Ви хочете почати відлік зараз, чи обрати дату раніше?"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/title" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/button_now"
-            android:layout_width="wrap_content"
+            android:layout_width="148dp"
             android:layout_height="wrap_content"
             android:text="Now"
+            android:layout_marginTop="16dp"
+            android:paddingStart="48dp"
+            android:paddingEnd="48dp"
+            android:background="@drawable/black_button"
             app:layout_constraintStart_toStartOf="@+id/question"
             app:layout_constraintTop_toBottomOf="@+id/question" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/button_earlier"
-            android:layout_width="wrap_content"
+            android:layout_width="148dp"
             android:layout_height="wrap_content"
-            android:text="Choose date"
+            android:text="Date"
+            android:layout_marginTop="16dp"
+            android:paddingStart="48dp"
+            android:paddingEnd="48dp"
+            android:background="@drawable/black_button"
             app:layout_constraintEnd_toEndOf="@+id/question"
             app:layout_constraintTop_toBottomOf="@+id/question" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-    <!--
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="end"
-        android:orientation="horizontal">
-
-
-    </LinearLayout>-->
-
-</androidx.cardview.widget.CardView>

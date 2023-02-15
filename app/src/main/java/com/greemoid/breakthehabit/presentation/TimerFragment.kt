@@ -69,53 +69,51 @@ class TimerFragment : Fragment() {
 
             val rightButton = dialogView.findViewById<Button>(R.id.button_earlier)
             rightButton.setOnClickListener {
-                // Perform some action when the right button is clicked
-                Toast.makeText(requireContext(), "Earlier", Toast.LENGTH_SHORT).show()
+                val calendar = Calendar.getInstance()
+                val year = calendar.get(Calendar.YEAR)
+                val month = calendar.get(Calendar.MONTH)
+                val day = calendar.get(Calendar.DAY_OF_MONTH)
+                val hour = calendar.get(Calendar.HOUR_OF_DAY)
+                val minute = calendar.get(Calendar.MINUTE)
 
-                    val calendar = Calendar.getInstance()
-                    val year = calendar.get(Calendar.YEAR)
-                    val month = calendar.get(Calendar.MONTH)
-                    val day = calendar.get(Calendar.DAY_OF_MONTH)
-                    val hour = calendar.get(Calendar.HOUR_OF_DAY)
-                    val minute = calendar.get(Calendar.MINUTE)
-
-                    val datePickerDialog = DatePickerDialog(
-                        requireContext(),
-                        DatePickerDialog.OnDateSetListener { view, selectedYear, selectedMonth, selectedDay ->
-                            val timePickerDialog = TimePickerDialog(
-                                requireContext(),
-                                TimePickerDialog.OnTimeSetListener { view, selectedHour, selectedMinute ->
-                                    val selectedCalendar = Calendar.getInstance()
-                                    selectedCalendar.set(selectedYear, selectedMonth, selectedDay, selectedHour, selectedMinute)
-                                    val selectedDateTimeInMillis = selectedCalendar.timeInMillis
+                val datePickerDialog = DatePickerDialog(
+                    requireContext(),
+                    DatePickerDialog.OnDateSetListener { view, selectedYear, selectedMonth, selectedDay ->
+                        val timePickerDialog = TimePickerDialog(
+                            requireContext(),
+                            TimePickerDialog.OnTimeSetListener { view, selectedHour, selectedMinute ->
+                                val selectedCalendar = Calendar.getInstance()
+                                selectedCalendar.set(selectedYear,
+                                    selectedMonth,
+                                    selectedDay,
+                                    selectedHour,
+                                    selectedMinute)
+                                val selectedDateTimeInMillis = selectedCalendar.timeInMillis
+                                if (selectedDateTimeInMillis > System.currentTimeMillis()) {
+                                    Toast.makeText(requireContext(),
+                                        "Choose another date",
+                                        Toast.LENGTH_SHORT).show()
+                                } else {
                                     viewModel.saveTime(selectedDateTimeInMillis)
                                     viewModel.getTime()
                                     setVisibility(STARTED)
-                                },
-                                hour,
-                                minute,
-                                false
-                            )
-                            timePickerDialog.show()
-                        },
-                        year,
-                        month,
-                        day
-                    )
-                    datePickerDialog.show()
+                                }
+                            },
+                            hour,
+                            minute,
+                            false
+                        )
+                        timePickerDialog.show()
+                    },
+                    year,
+                    month,
+                    day
+                )
+                datePickerDialog.show()
 
 
                 dialog.dismiss()
             }
-
-            /*setPositiveButton("Now") { dialog, which ->
-                viewModel.saveTime(System.currentTimeMillis())
-                viewModel.getTime()
-                setVisibility(STARTED)
-            }
-            setNegativeButton("Earlier") { dialog, which ->
-                Toast.makeText(requireContext(), "Earlier", Toast.LENGTH_SHORT).show()
-            }*/
         }
 
         var timeString = ""
