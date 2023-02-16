@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,6 +29,8 @@ class TimerFragment : Fragment() {
     private var _binding: FragmentTimerBinding? = null
     private val binding get() = _binding!!
 
+    private lateinit var builder: AlertDialog.Builder
+
     private val viewModel: BaseViewModel by viewModels()
 
     private lateinit var dialog: AlertDialog
@@ -43,21 +46,74 @@ class TimerFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         invalidateTime()
-        val builder = AlertDialog.Builder(requireContext())
+
+
+
+        binding.btnStart.setOnClickListener {
+            showDialog()
+            dialog = builder.create()
+            dialog.show()
+        }
+
+
+
+        var timeString = ""
+        val formatter = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        val date = Date()
+        val current = formatter.format(date)
+        binding.btnStop.setOnClickListener {
+            viewModel.saveTime(0L)
+            invalidateTime()
+
+            val model = AddictionModel(
+                days = timeString,
+                date = current,
+                image = "sfsdfsd"
+            )
+            viewModel.viewModelScope.launch {
+                viewModel.saveToList(model)
+            }
+            setVisibility(STOPPED)
+        }
+
+        viewModel.milliseconds.observe(viewLifecycleOwner) { time ->
+            if (time == 0L) {
+                setVisibility(STOPPED)
+            } else {
+                setVisibility(STARTED)
+                lifecycleScope.launchWhenResumed {
+                    delay(500)
+                    viewModel.convert().observe(viewLifecycleOwner) { string ->
+                        timeString = string
+                        binding.tvCounter.text = string
+                    }
+                }
+            }
+        }
+
+
+    }
+
+    private fun setVisibility(state: Int) {
+        if (state == STARTED) {
+            binding.btnStart.visibility = View.GONE
+            binding.btnStop.visibility = View.VISIBLE
+        } else {
+            binding.btnStop.visibility = View.GONE
+            binding.btnStart.visibility = View.VISIBLE
+            invalidateTime()
+        }
+    }
+
+    private fun showDialog() {
+        builder = AlertDialog.Builder(requireContext())
 
         val inflater = layoutInflater
         val dialogView = inflater.inflate(R.layout.dialog_layout, null)
 
-        builder.setView(dialogView)
-        binding.btnStart.setOnClickListener {
-            dialog = builder.create()
-            dialog.show()
-            /*viewModel.saveTime(System.currentTimeMillis())
-            viewModel.getTime()
-            setVisibility(STARTED)*/
-        }
-
         builder.apply {
+
+            setView(dialogView)
 
             val leftButton = dialogView.findViewById<Button>(R.id.button_now)
             leftButton.setOnClickListener {
@@ -112,54 +168,9 @@ class TimerFragment : Fragment() {
                 datePickerDialog.show()
 
 
+
                 dialog.dismiss()
             }
-        }
-
-        var timeString = ""
-        val formatter = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-        val date = Date()
-        val current = formatter.format(date)
-        binding.btnStop.setOnClickListener {
-            viewModel.saveTime(0L)
-            invalidateTime()
-            val model = AddictionModel(
-                days = timeString,
-                date = current,
-                image = "sfsdfsd"
-            )
-            viewModel.viewModelScope.launch {
-                viewModel.saveToList(model)
-            }
-            setVisibility(STOPPED)
-        }
-
-        viewModel.milliseconds.observe(viewLifecycleOwner) { time ->
-            if (time == 0L) {
-                setVisibility(STOPPED)
-            } else {
-                setVisibility(STARTED)
-                lifecycleScope.launchWhenResumed {
-                    delay(500)
-                    viewModel.convert().observe(viewLifecycleOwner) { string ->
-                        timeString = string
-                        binding.tvCounter.text = string
-                    }
-                }
-            }
-        }
-
-
-    }
-
-    private fun setVisibility(state: Int) {
-        if (state == STARTED) {
-            binding.btnStart.visibility = View.GONE
-            binding.btnStop.visibility = View.VISIBLE
-        } else {
-            binding.btnStop.visibility = View.GONE
-            binding.btnStart.visibility = View.VISIBLE
-            invalidateTime()
         }
     }
 
