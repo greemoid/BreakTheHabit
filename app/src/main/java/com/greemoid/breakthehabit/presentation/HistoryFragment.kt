@@ -33,6 +33,9 @@ class HistoryFragment : Fragment() {
         viewModel.getList().observe(viewLifecycleOwner) { list ->
             adapter.differ.submitList(list.asReversed())
         }
+        adapter.setOnClickListener {
+            viewModel.delete(it)
+        }
     }
 
     override fun onDestroyView() {

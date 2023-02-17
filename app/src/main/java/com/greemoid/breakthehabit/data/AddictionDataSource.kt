@@ -1,11 +1,10 @@
 package com.greemoid.breakthehabit.data
 
 import androidx.lifecycle.LiveData
-import com.greemoid.breakthehabit.presentation.AddictionUi
 
 class AddictionDataSource(
-    private val dao: AddictionDao
-) : AddictionRepository{
+    private val dao: AddictionDao,
+) : AddictionRepository {
     override fun getList(): LiveData<List<AddictionModel>> {
         return dao.getList()
     }
@@ -14,7 +13,7 @@ class AddictionDataSource(
         dao.save(addictionModel)
     }
 
-    override fun delete(addictionModel: AddictionModel) {
+    override suspend fun delete(addictionModel: AddictionModel) {
         dao.delete(addictionModel)
     }
 

@@ -8,5 +8,6 @@ interface MainViewModel {
     fun saveTime(milliseconds: Long)
     fun getList(): LiveData<List<AddictionModel>>
     suspend fun saveToList(addictionModel: AddictionModel)
+    fun delete(addictionModel: AddictionModel)
     fun convert(): LiveData<String>
 }

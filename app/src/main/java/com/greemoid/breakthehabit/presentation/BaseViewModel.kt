@@ -47,6 +47,12 @@ class BaseViewModel @Inject constructor(
         }
     }
 
+    override fun delete(addictionModel: AddictionModel) {
+        viewModelScope.launch {
+            repository.delete(addictionModel)
+        }
+    }
+
     override fun convert(): LiveData<String> {
 
         val m = getTime()

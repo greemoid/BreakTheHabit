@@ -4,7 +4,6 @@ import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -54,7 +53,6 @@ class TimerFragment : Fragment() {
             dialog = builder.create()
             dialog.show()
         }
-
 
 
         var timeString = ""
@@ -134,10 +132,10 @@ class TimerFragment : Fragment() {
 
                 val datePickerDialog = DatePickerDialog(
                     requireContext(),
-                    DatePickerDialog.OnDateSetListener { view, selectedYear, selectedMonth, selectedDay ->
+                    { _, selectedYear, selectedMonth, selectedDay ->
                         val timePickerDialog = TimePickerDialog(
                             requireContext(),
-                            TimePickerDialog.OnTimeSetListener { view, selectedHour, selectedMinute ->
+                            { _, selectedHour, selectedMinute ->
                                 val selectedCalendar = Calendar.getInstance()
                                 selectedCalendar.set(selectedYear,
                                     selectedMonth,

@@ -18,6 +18,11 @@ class AddictionAdapter :
                 tvBadgeAndDays.text = addictionModel.days
                 tvDescription.text = addictionModel.date
             }
+
+            itemView.setOnClickListener {
+                onItemClickListener?.let { it(addictionModel) }
+            }
+
         }
     }
 
@@ -43,6 +48,12 @@ class AddictionAdapter :
             return oldItem == newItem
         }
     }
+
+    fun setOnClickListener(listener: (AddictionModel) -> Unit) {
+        onItemClickListener = listener
+    }
+
+    private var onItemClickListener: ((AddictionModel) -> Unit)? = null
 
     val differ = AsyncListDiffer(this, differCallback)
 

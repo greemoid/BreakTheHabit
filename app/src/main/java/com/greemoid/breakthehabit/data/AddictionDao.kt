@@ -13,5 +13,5 @@ interface AddictionDao {
     suspend fun save(addictionModel: AddictionModel)
 
     @Delete
-    fun delete(addictionModel: AddictionModel)
+    suspend fun delete(addictionModel: AddictionModel)
 }
