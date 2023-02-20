@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.greemoid.breakthehabit.data.AddictionModel
 import com.greemoid.breakthehabit.databinding.SessionItemLayoutBinding
@@ -19,9 +20,6 @@ class AddictionAdapter :
                 tvDescription.text = addictionModel.date
             }
 
-            itemView.setOnClickListener {
-                onItemClickListener?.let { it(addictionModel) }
-            }
 
         }
     }
@@ -49,11 +47,12 @@ class AddictionAdapter :
         }
     }
 
+
+    var onItemClickListener: ((AddictionModel) -> Unit)? = null
+
     fun setOnClickListener(listener: (AddictionModel) -> Unit) {
         onItemClickListener = listener
     }
-
-    private var onItemClickListener: ((AddictionModel) -> Unit)? = null
 
     val differ = AsyncListDiffer(this, differCallback)
 
