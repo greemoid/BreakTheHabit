@@ -48,7 +48,6 @@ class HistoryFragment : Fragment() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 viewModel.delete(adapter.differ.currentList[viewHolder.adapterPosition])
             }
-
         }).attachToRecyclerView(binding.historySessionsRv)
 
         adapter.setOnClickListener { model ->
