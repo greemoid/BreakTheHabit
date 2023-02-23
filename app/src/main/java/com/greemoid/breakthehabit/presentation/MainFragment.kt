@@ -17,6 +17,7 @@ class MainFragment : Fragment() {
     val binding get() = _binding!!
 
     private lateinit var viewPager: ViewPager2
+    private lateinit var adapter: AddictionPagerAdapter
 
 
     override fun onCreateView(
@@ -29,9 +30,7 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewPager = binding.viewPager
-        val adapter = AddictionPagerAdapter(this)
-        binding.viewPager.adapter = adapter
+        setupAdapter()
 
         binding.ivTimer.setImageResource(R.drawable.ic_time)
         binding.ivHistory.setImageResource(R.drawable.ic_history_hidden)
@@ -48,6 +47,12 @@ class MainFragment : Fragment() {
                 }
             }
         })
+    }
+
+    private fun setupAdapter() {
+        viewPager = binding.viewPager
+        adapter = AddictionPagerAdapter(this)
+        binding.viewPager.adapter = adapter
     }
 
     override fun onDestroyView() {

@@ -18,6 +18,7 @@ class HistoryFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel: BaseViewModel by viewModels()
+    private lateinit var adapter: AddictionAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,9 +30,7 @@ class HistoryFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val rv = binding.historySessionsRv
-        val adapter = AddictionAdapter()
-        rv.adapter = adapter
+        setupAdapter()
         viewModel.getList().observe(viewLifecycleOwner) { list ->
             adapter.differ.submitList(list.asReversed())
         }
@@ -53,6 +52,12 @@ class HistoryFragment : Fragment() {
         adapter.setOnClickListener { model ->
             viewModel.delete(model)
         }
+    }
+
+    private fun setupAdapter() {
+        val rv = binding.historySessionsRv
+        adapter = AddictionAdapter()
+        rv.adapter = adapter
     }
 
     override fun onDestroyView() {
