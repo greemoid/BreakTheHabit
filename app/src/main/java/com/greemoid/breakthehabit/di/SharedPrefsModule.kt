@@ -2,6 +2,7 @@ package com.greemoid.breakthehabit.di
 
 import android.content.Context
 import com.greemoid.breakthehabit.data.TimeSharedPrefs
+import com.greemoid.breakthehabit.data.TimeSharedPrefsImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,5 +15,5 @@ class SharedPrefsModule {
 
     @Provides
     fun provideTimeSharedPrefs(@ApplicationContext context: Context): TimeSharedPrefs =
-        TimeSharedPrefs.Base(context)
+        TimeSharedPrefsImpl(context)
 }
