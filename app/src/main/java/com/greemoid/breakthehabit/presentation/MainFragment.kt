@@ -1,6 +1,5 @@
 package com.greemoid.breakthehabit.presentation
 
-import android.opengl.Visibility
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,23 +13,24 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainFragment : Fragment() {
 
-    private lateinit var binding: FragmentMainBinding
+    private var _binding: FragmentMainBinding? = null
+    val binding get() = _binding!!
+
     private lateinit var viewPager: ViewPager2
+    private lateinit var adapter: AddictionPagerAdapter
 
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
-        binding = FragmentMainBinding.inflate(inflater, container, false)
+    ): View {
+        _binding = FragmentMainBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewPager = binding.viewPager
-        val adapter = AddictionPagerAdapter(this)
-        binding.viewPager.adapter = adapter
+        setupAdapter()
 
         binding.ivTimer.setImageResource(R.drawable.ic_time)
         binding.ivHistory.setImageResource(R.drawable.ic_history_hidden)
@@ -47,5 +47,16 @@ class MainFragment : Fragment() {
                 }
             }
         })
+    }
+
+    private fun setupAdapter() {
+        viewPager = binding.viewPager
+        adapter = AddictionPagerAdapter(this)
+        binding.viewPager.adapter = adapter
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
