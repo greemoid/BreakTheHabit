@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="32dp"
+    android:paddingBottom="32dp"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
+    android:background="@color/background">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/choose_date"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/question"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:textColor="@color/white"
+            android:text="@string/question_dialog"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/button_now"
+            android:layout_width="148dp"
+            android:layout_height="wrap_content"
+            android:text="@string/now"
+            android:layout_marginTop="16dp"
+            android:paddingStart="48dp"
+            android:paddingEnd="48dp"
+            android:background="@drawable/black_button"
+            app:layout_constraintStart_toStartOf="@+id/question"
+            app:layout_constraintTop_toBottomOf="@+id/question" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/button_earlier"
+            android:layout_width="148dp"
+            android:layout_height="wrap_content"
+            android:text="@string/date"
+            android:layout_marginTop="16dp"
+            android:paddingStart="48dp"
+            android:paddingEnd="48dp"
+            android:background="@drawable/black_button"
+            app:layout_constraintEnd_toEndOf="@+id/question"
+            app:layout_constraintTop_toBottomOf="@+id/question" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
