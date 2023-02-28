@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -29,10 +30,12 @@ class TimerFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var builder: AlertDialog.Builder
+    private lateinit var secondBuilder: AlertDialog.Builder
 
     private val viewModel: BaseViewModel by viewModels()
 
     private lateinit var dialog: AlertDialog
+    private lateinit var dialogCancel: AlertDialog
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -60,18 +63,9 @@ class TimerFragment : Fragment() {
         val date = Date()
         val current = formatter.format(date)
         binding.btnStop.setOnClickListener {
-            viewModel.saveTime(0L)
-            invalidateTime()
-
-            val model = AddictionModel(
-                days = timeString,
-                date = current,
-                image = "sfsdfsd"
-            )
-            viewModel.viewModelScope.launch {
-                viewModel.saveToList(model)
-            }
-            setVisibility(STOPPED)
+            showCancelDialog(timeString, current)
+            dialogCancel = secondBuilder.create()
+            dialogCancel.show()
         }
 
         viewModel.milliseconds.observe(viewLifecycleOwner) { time ->
@@ -103,6 +97,36 @@ class TimerFragment : Fragment() {
         }
     }
 
+    private fun showCancelDialog(timeString: String, current: String) {
+        secondBuilder = AlertDialog.Builder(requireContext())
+
+        val inflater = layoutInflater
+        val dialogView = inflater.inflate(R.layout.dialog_cancel_layout, null)
+
+        secondBuilder.apply {
+            setView(dialogView)
+            val button = dialogView.findViewById<Button>(R.id.button_save)
+            val editText = dialogView.findViewById<EditText>(R.id.et_why)
+            val whyString = editText.text
+            button.setOnClickListener {
+                viewModel.saveTime(0L)
+                invalidateTime()
+
+                val model = AddictionModel(
+                    days = timeString,
+                    why = whyString.toString(),
+                    date = current,
+                    image = "sfsdfsd"
+                )
+                viewModel.viewModelScope.launch {
+                    viewModel.saveToList(model)
+                }
+                setVisibility(STOPPED)
+                dialogCancel.dismiss()
+            }
+        }
+    }
+
     private fun showDialog() {
         builder = AlertDialog.Builder(requireContext())
 
@@ -121,7 +145,7 @@ class TimerFragment : Fragment() {
                 dialog.dismiss()
             }
 
-            val rightButton = dialogView.findViewById<Button>(R.id.button_earlier)
+            val rightButton = dialogView.findViewById<Button>(R.id.button_save)
             rightButton.setOnClickListener {
                 val calendar = Calendar.getInstance()
                 val year = calendar.get(Calendar.YEAR)

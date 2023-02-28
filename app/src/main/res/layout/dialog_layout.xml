@@ -46,7 +46,7 @@
             app:layout_constraintTop_toBottomOf="@+id/question" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/button_earlier"
+            android:id="@+id/button_save"
             android:layout_width="148dp"
             android:layout_height="wrap_content"
             android:text="@string/date"

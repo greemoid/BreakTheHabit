@@ -8,6 +8,7 @@ import androidx.room.PrimaryKey
 data class AddictionModel(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     @ColumnInfo val days: String,
+    @ColumnInfo val why: String,
     @ColumnInfo val date: String,
     @ColumnInfo val image: String,
 )
