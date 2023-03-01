@@ -1,33 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="32dp"
-    android:paddingBottom="32dp"
+    android:background="@color/background"
     android:paddingStart="16dp"
+    android:paddingTop="32dp"
     android:paddingEnd="16dp"
-    android:background="@color/background">
+    android:paddingBottom="32dp">
 
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Чому зірвалися?"
-            android:textColor="@color/white"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/why"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/question"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Напишіть, чому ви вирішили зірватися."
+        android:text="@string/write_why"
         android:textColor="@color/white"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -42,7 +41,7 @@
         android:background="@drawable/black_button"
         android:paddingStart="48dp"
         android:paddingEnd="48dp"
-        android:text="Save"
+        android:text="@string/save"
         app:layout_constraintEnd_toEndOf="@+id/question"
         app:layout_constraintTop_toBottomOf="@+id/et_why" />
 
@@ -51,10 +50,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:background="@drawable/black_button"
         android:ems="10"
+        android:autofillHints="name"
+        android:hint="@string/input"
         android:inputType="textPersonName"
-        android:hint="Введіть тут"
-        android:textColor="@color/white"
+        android:padding="8dp"
+        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="@+id/question"
         app:layout_constraintStart_toStartOf="@+id/question"
         app:layout_constraintTop_toBottomOf="@+id/question" />

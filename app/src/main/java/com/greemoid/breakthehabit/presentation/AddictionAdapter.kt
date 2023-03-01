@@ -17,7 +17,7 @@ class AddictionAdapter :
         fun bind(addictionModel: AddictionModel) {
             binding.apply {
                 tvBadgeAndDays.text = addictionModel.days
-                tvDescription.text = addictionModel.date
+                tvDescription.text = addictionModel.why
             }
 
 
