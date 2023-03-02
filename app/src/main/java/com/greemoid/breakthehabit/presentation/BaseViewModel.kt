@@ -25,7 +25,6 @@ class BaseViewModel @Inject constructor(
 
     init {
         getTime()
-        getList()
     }
 
     override fun getTime(): Long {

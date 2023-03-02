@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Break the addiction</string>
+    <string name="time">%d днів %d годин %2d хвилин</string>
+    <string name="start">Почати</string>
+    <string name="stop">Завершити</string>
+    <string name="choose_date">Оберіть дату</string>
+    <string name="question_dialog">Ви хочете почати відлік зараз, чи обрати дату раніше?</string>
+    <string name="now">Зараз</string>
+    <string name="date">Дата</string>
+    <string name="why">Чому зірвалися?</string>
+    <string name="write_why">Напишіть, чому ви вирішили зірватися.</string>
+    <string name="save">Зберегти</string>
+    <string name="input">Введіть тут</string>
+    <string name="time_default">0 днів 0 годиг 0 хвилин</string>
+</resources>

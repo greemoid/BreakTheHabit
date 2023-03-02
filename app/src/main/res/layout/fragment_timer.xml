@@ -59,7 +59,7 @@
         app:layout_constraintBottom_toTopOf="@+id/tv_counter"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/bicepss"
+        app:srcCompat="@drawable/biceps"
         android:contentDescription="@string/icon" />
 
 
