@@ -24,7 +24,6 @@ class MainActivity : AppCompatActivity() {
         val navController = navHostFragment.navController
     }
 
-
     override fun onDestroy() {
         super.onDestroy()
         _binding = null

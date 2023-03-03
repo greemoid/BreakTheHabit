@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.greemoid.breakthehabit.data.AddictionModel
 import com.greemoid.breakthehabit.databinding.SessionItemLayoutBinding
@@ -19,8 +18,6 @@ class AddictionAdapter :
                 tvBadgeAndDays.text = addictionModel.days
                 tvDescription.text = addictionModel.why
             }
-
-
         }
     }
 
@@ -46,7 +43,6 @@ class AddictionAdapter :
             return oldItem == newItem
         }
     }
-
 
     var onItemClickListener: ((AddictionModel) -> Unit)? = null
 

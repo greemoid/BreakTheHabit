@@ -49,8 +49,6 @@ class TimerFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         invalidateTime()
 
-
-
         binding.btnStart.setOnClickListener {
             showDialog()
             dialog = builder.create()
@@ -82,8 +80,6 @@ class TimerFragment : Fragment() {
                 }
             }
         }
-
-
     }
 
     private fun setVisibility(state: Int) {
@@ -116,7 +112,7 @@ class TimerFragment : Fragment() {
                     days = timeString,
                     why = whyString.toString(),
                     date = current,
-                    image = "sfsdfsd"
+                    image = "1"
                 )
                 viewModel.viewModelScope.launch {
                     viewModel.saveToList(model)
@@ -188,8 +184,6 @@ class TimerFragment : Fragment() {
                     day
                 )
                 datePickerDialog.show()
-
-
 
                 dialog.dismiss()
             }
